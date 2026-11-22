@@ -5,11 +5,20 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
-    
+
 jobs:
-  build: 
+  build:
     runs-on: ubuntu-latest
     container: node:20-alpine
-
-
-  
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+    
+      - name: Install dependecies
+        run: npm ci
+      
+      - name: Lint with ESLint
+        run: npm run lint
+      
+      - name: Run unit tests with Jest
+        run: npm test -- --coverage
